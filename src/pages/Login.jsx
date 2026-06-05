@@ -6,6 +6,7 @@ import {
   User,
   Lock,
   Eye,
+  EyeOff,
   LogIn,
 } from "lucide-react";
 
@@ -13,179 +14,156 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-
-  const [selectedRole, setSelectedRole] =
-    useState("direccion");
+  const [selectedRole, setSelectedRole] = useState("direccion");
+  const [showPassword, setShowPassword] = useState(false);
 
   const roles = [
     {
       id: "admin",
       title: "Administrador",
-      icon: <ShieldCheck size={30} />,
+      icon: <ShieldCheck size={22} />,
     },
     {
       id: "direccion",
       title: "Dirección/\nSecretaría",
-      icon: <ClipboardList size={30} />,
+      icon: <ClipboardList size={22} />,
     },
     {
       id: "vehicular",
       title: "Control Vehicular",
-      icon: <Car size={30} />,
+      icon: <Car size={22} />,
     },
     {
       id: "caseta",
       title: "Caseta",
-      icon: <Building2 size={30} />,
+      icon: <Building2 size={22} />,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#eef2f6] py-10 px-4">
-
-      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-8">
-
+    <div className="min-h-screen bg-[#eef2f6] flex items-center justify-center p-4 sm:p-6 md:p-8">
+      <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl border border-gray-100/80 p-6 sm:p-8 flex flex-col gap-6">
         {/* HEADER */}
-
-        <div className="flex flex-col items-center">
-
-          <div className="bg-[#032b63] p-5 rounded-2xl shadow-lg">
-            <Building2 className="text-white" size={40} />
+        <div className="flex flex-col items-center text-center">
+          <div className="bg-[#032b63] p-4 rounded-2xl shadow-md text-white inline-flex items-center justify-center">
+            <Building2 className="text-white" size={32} />
           </div>
 
-          <h1 className="text-5xl font-bold text-[#032b63] mt-5">
+          <h1 className="text-3xl font-extrabold text-[#032b63] tracking-tight mt-4">
             INCyTEA
           </h1>
 
-          <p className="text-gray-500 mt-2">
+          <p className="text-sm text-gray-500 font-medium mt-1">
             Sistema de Gestión Institucional
           </p>
-
         </div>
 
         {/* ROLES */}
-
-        <div className="mt-12">
-
-          <h2 className="text-gray-500 font-semibold mb-5">
-            SELECCIONE SU ROL
+        <div>
+          <h2 className="text-xs font-bold text-gray-400 tracking-widest text-center uppercase mb-3.5">
+            Seleccione su Rol
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {roles.map((role) => (
-
               <button
                 key={role.id}
                 onClick={() => setSelectedRole(role.id)}
-                className={`border-2 rounded-2xl p-8 min-h-47.5 transition-all duration-300
+                className={`relative overflow-hidden border rounded-2xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#032b63]/10
                 ${
                   selectedRole === role.id
-                    ? "border-blue-500 bg-blue-50 shadow-md"
-                    : "border-gray-200 hover:border-blue-300"
+                    ? "border-[#032b63] bg-blue-50/40 shadow-sm ring-1 ring-[#032b63]/30"
+                    : "border-gray-200 hover:border-blue-300 hover:bg-gray-50/50"
                 }`}
               >
-
                 <div
-                  className={`w-20 h-20 rounded-2xl mx-auto flex items-center justify-center transition-all
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200
                   ${
                     selectedRole === role.id
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-blue-600"
+                      ? "bg-[#032b63] text-white shadow-md shadow-blue-900/10"
+                      : "bg-gray-100 text-[#032b63]"
                   }`}
                 >
                   {role.icon}
                 </div>
 
-                <h3 className="text-lg font-semibold mt-5 whitespace-pre-line">
+                <h3 className="text-xs font-bold text-gray-700 leading-tight mt-2 whitespace-pre-line">
                   {role.title}
                 </h3>
-
               </button>
-
             ))}
-
           </div>
-
         </div>
 
         {/* FORM */}
-
-        <div className="max-w-3xl mx-auto mt-14 border border-gray-200 rounded-3xl p-8">
-
+        <div className="flex flex-col gap-4 mt-2">
           <div>
-
-            <label className="text-gray-600 font-medium">
+            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Usuario
             </label>
 
-            <div className="mt-3 border border-gray-300 rounded-xl h-16 flex items-center px-4">
-
-              <User className="text-gray-400" />
+            <div className="mt-1.5 relative flex items-center border border-gray-200 rounded-xl h-12 px-4 bg-gray-50/50 focus-within:border-[#032b63] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#032b63]/10 transition-all duration-200">
+              <User className="text-gray-400 mr-2.5 flex-shrink-0" size={18} />
 
               <input
                 type="text"
                 placeholder="Nombre de usuario"
-                className="w-full outline-none px-4 text-lg"
+                className="w-full bg-transparent outline-none text-base text-gray-800 placeholder-gray-400"
               />
-
             </div>
-
           </div>
 
-          <div className="mt-6">
-
-            <label className="text-gray-600 font-medium">
+          <div>
+            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
               Contraseña
             </label>
 
-            <div className="mt-3 border border-gray-300 rounded-xl h-16 flex items-center px-4">
-
-              <Lock className="text-gray-400" />
+            <div className="mt-1.5 relative flex items-center border border-gray-200 rounded-xl h-12 px-4 bg-gray-50/50 focus-within:border-[#032b63] focus-within:bg-white focus-within:ring-4 focus-within:ring-[#032b63]/10 transition-all duration-200">
+              <Lock className="text-gray-400 mr-2.5 flex-shrink-0" size={18} />
 
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="w-full outline-none px-4 text-lg"
+                className="w-full bg-transparent outline-none text-base text-gray-800 placeholder-gray-400"
               />
 
-              <Eye className="text-gray-400" />
-
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none flex-shrink-0 ml-2.5 cursor-pointer"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
-
           </div>
 
-          <div className="flex justify-between items-center mt-6 flex-wrap gap-4">
-
-            <label className="flex items-center gap-2 text-gray-500">
-              <input type="checkbox" />
+          <div className="flex justify-between items-center mt-1 flex-wrap gap-2 text-xs sm:text-sm">
+            <label className="flex items-center gap-2 text-gray-500 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="rounded border-gray-300 text-[#032b63] focus:ring-[#032b63] cursor-pointer"
+              />
               Recordarme
             </label>
 
-            <button className="text-blue-700 hover:underline">
+            <button className="text-[#032b63] font-semibold hover:underline transition-colors focus:outline-none cursor-pointer">
               ¿Olvidó su contraseña?
             </button>
-
           </div>
 
-          <Link to="/dashboard">
-
+          <Link to="/dashboard" className="w-full">
             <button
               onClick={() => {
                 localStorage.setItem("role", selectedRole);
               }}
-              className="w-full h-16 bg-[#032b63] hover:bg-[#021d45] transition rounded-2xl text-white font-bold text-xl mt-8 flex items-center justify-center gap-3 shadow-lg"
+              className="w-full h-12 bg-[#032b63] hover:bg-[#021d45] active:scale-[0.99] transition-all rounded-xl text-white font-bold text-base mt-4 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
             >
               Ingresar al Sistema
-              <LogIn />
+              <LogIn size={18} />
             </button>
-
           </Link>
-
         </div>
-
       </div>
-
     </div>
   );
 }

@@ -4,11 +4,13 @@ export const roles = {
     "vehicular",
     "caseta",
     "admin",
+    "dirysec",
   ],
 
   direccion: [
     "dashboard",
     "vehicular",
+    "dirysec",
   ],
 
   vehicular: [

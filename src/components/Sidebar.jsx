@@ -3,6 +3,7 @@ import {
   Car,
   Shield,
   Users,
+  FileText,
   LogOut,
 } from "lucide-react";
 
@@ -83,6 +84,26 @@ export default function Sidebar() {
                 <Shield />
 
                 <span>Caseta</span>
+
+              </div>
+
+            </Link>
+
+          )
+        }
+
+        {/* DIRYSEC */}
+
+        {
+          permissions.includes("dirysec") && (
+
+            <Link to="/dirysec">
+
+              <div className="flex items-center gap-4 hover:bg-blue-800 p-4 rounded-2xl transition">
+
+                <FileText />
+
+                <span>Pases de Salida</span>
 
               </div>
 

@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Vehicular from "./pages/Vehicular";
 import Caseta from "./pages/Caseta";
 import Admin from "./pages/Admin";
+import DirySec from "./pages/DirySec";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/vehicular" element={<Vehicular />} />
       <Route path="/caseta" element={<Caseta />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/dirysec" element={<DirySec />} />
     </Routes>
   );
 }
