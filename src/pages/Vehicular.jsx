@@ -28,10 +28,10 @@ export default function Vehicular() {
 
   // Mock Data
   const [vehiculos, setVehiculos] = useState([
-    { id: 1, placa: "ABC-1234", modelo: "Toyota Hilux 2023", status: "DISPONIBLE", type: "pickup", fuel: 75, odometro: 12450, proxServicio: 2550, activoId: "INC-V-088", combustibleTipo: "Alto Octanaje", custodio: "Ing. Mario Domínguez", ultimaInsp: "Oct 24, 2024" },
-    { id: 2, placa: "XYZ-9876", modelo: "Ford Ranger 2022", status: "EN USO", type: "pickup", fuel: 40, odometro: 45000, proxServicio: 1000, activoId: "INC-V-045", combustibleTipo: "Diésel", custodio: "Arq. Laura Torres", ultimaInsp: "Sep 10, 2024" },
-    { id: 3, placa: "EVO-001X", modelo: "Nissan Leaf 2024", status: "DISPONIBLE", type: "car", fuel: 100, odometro: 5000, proxServicio: 5000, activoId: "INC-V-102", combustibleTipo: "Eléctrico", custodio: "Lic. Carlos Ruiz", ultimaInsp: "Nov 01, 2024" },
-    { id: 4, placa: "BUS-4420", modelo: "Mercedes Sprinter", status: "EN USO", type: "bus", fuel: 20, odometro: 120000, proxServicio: 500, activoId: "INC-V-012", combustibleTipo: "Diésel", custodio: "Roberto Gómez", ultimaInsp: "Ago 15, 2024" },
+    { id: 1, placa: "ABC-1234", modelo: "Toyota Hilux 2023", status: "DISPONIBLE", type: "pickup", fuel: 75, odometro: 12450, proxServicio: 2550, activoId: "INC-V-088", combustibleTipo: "Alto Octanaje", custodio: "Ing. Mario Domínguez", ultimaInsp: "Oct 24, 2024", foto: null },
+    { id: 2, placa: "XYZ-9876", modelo: "Ford Ranger 2022", status: "EN USO", type: "pickup", fuel: 40, odometro: 45000, proxServicio: 1000, activoId: "INC-V-045", combustibleTipo: "Diésel", custodio: "Arq. Laura Torres", ultimaInsp: "Sep 10, 2024", foto: null },
+    { id: 3, placa: "EVO-001X", modelo: "Nissan Leaf 2024", status: "DISPONIBLE", type: "car", fuel: 100, odometro: 5000, proxServicio: 5000, activoId: "INC-V-102", combustibleTipo: "Eléctrico", custodio: "Lic. Carlos Ruiz", ultimaInsp: "Nov 01, 2024", foto: null },
+    { id: 4, placa: "BUS-4420", modelo: "Mercedes Sprinter", status: "EN USO", type: "bus", fuel: 20, odometro: 120000, proxServicio: 500, activoId: "INC-V-012", combustibleTipo: "Diésel", custodio: "Roberto Gómez", ultimaInsp: "Ago 15, 2024", foto: null },
   ]);
 
   const [solicitudes, setSolicitudes] = useState([
@@ -50,15 +50,18 @@ export default function Vehicular() {
     type: "car",
     combustibleTipo: "Gasolina",
     odometro: "",
-    custodio: ""
+    custodio: "",
+    foto: ""
   });
   
   const handleAddVehicle = (e) => {
     e.preventDefault();
     const newId = vehiculos.length > 0 ? Math.max(...vehiculos.map(v => v.id)) + 1 : 1;
-    setVehiculos([...vehiculos, {
-      ...newVehiculo,
-      id: newId,
+      const { foto, ...rest } = newVehiculo;
+      setVehiculos([...vehiculos, {
+        ...rest,
+        foto: foto || null,
+        id: newId,
       status: "DISPONIBLE",
       fuel: 100,
       odometro: parseInt(newVehiculo.odometro) || 0,
@@ -67,7 +70,7 @@ export default function Vehicular() {
       ultimaInsp: new Date().toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })
     }]);
     setIsAddModalOpen(false);
-    setNewVehiculo({ placa: "", modelo: "", type: "car", combustibleTipo: "Gasolina", odometro: "", custodio: "" });
+    setNewVehiculo({ placa: "", modelo: "", type: "car", combustibleTipo: "Gasolina", odometro: "", custodio: "", foto: "" });
   };
 
   const handleConfirmExit = () => {
@@ -278,17 +281,20 @@ export default function Vehicular() {
                 </div>
 
                 <div className="flex flex-col xl:flex-row gap-8">
-                  {/* IMAGE PLACEHOLDER */}
+                  {/* VEHICLE PHOTO */}
                   <div className="xl:w-1/2 relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl aspect-[4/3] flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-200 group">
                     <div className="absolute top-4 left-4 bg-[#032b63] text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-md z-10">
                       {selectedVehiculo.placa}
                     </div>
-                    {/* Placeholder content instead of photo */}
-                    <div className="text-center text-gray-400 flex flex-col items-center">
-                      <ImageIcon className="mb-3 opacity-30" size={64} />
-                      <p className="font-semibold text-gray-500">Espacio para Foto</p>
-                      <p className="text-xs mt-1">({selectedVehiculo.modelo})</p>
-                    </div>
+                    {selectedVehiculo.foto ? (
+                      <img src={selectedVehiculo.foto} alt={selectedVehiculo.placa} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="text-center text-gray-400 flex flex-col items-center">
+                        <ImageIcon className="mb-3 opacity-30" size={64} />
+                        <p className="font-semibold text-gray-500">Espacio para Foto</p>
+                        <p className="text-xs mt-1">({selectedVehiculo.modelo})</p>
+                      </div>
+                    )}
                   </div>
 
                   {/* DETAILS */}
@@ -500,7 +506,37 @@ export default function Vehicular() {
                   <input required type="text" value={newVehiculo.custodio} onChange={e => setNewVehiculo({...newVehiculo, custodio: e.target.value})} className="w-full mt-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#032b63] outline-none" placeholder="Nombre..." />
                 </div>
               </div>
-              <div className="mt-4 flex justify-end gap-2">
+              <div>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Foto del Vehículo</label>
+                <div className="mt-1 flex items-center gap-4">
+                  <label className="flex-1 flex items-center gap-2 border border-dashed border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-500 hover:border-[#032b63] hover:text-[#032b63] cursor-pointer transition">
+                    <ImageIcon size={18} />
+                    {newVehiculo.foto ? "Cambiar imagen..." : "Seleccionar imagen..."}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={e => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (ev) => setNewVehiculo({...newVehiculo, foto: ev.target.result});
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                  {newVehiculo.foto && (
+                    <div className="relative shrink-0">
+                      <img src={newVehiculo.foto} alt="Preview" className="w-16 h-16 object-cover rounded-xl border border-gray-200" />
+                      <button type="button" onClick={() => setNewVehiculo({...newVehiculo, foto: ""})} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow cursor-pointer hover:bg-red-600" title="Quitar foto">
+                        <X size={12} />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="mt-2 flex justify-end gap-2">
                 <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-gray-500 font-bold text-xs hover:bg-gray-100 rounded-xl transition cursor-pointer">Cancelar</button>
                 <button type="submit" className="px-5 py-2 bg-[#032b63] text-white font-bold text-xs hover:bg-[#021d45] rounded-xl transition cursor-pointer">Registrar Vehículo</button>
               </div>

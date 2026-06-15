@@ -10,9 +10,7 @@ import {
   History,
   LogOut,
   LogIn,
-  Camera,
   ChevronRight,
-  Printer,
   FileSearch
 } from "lucide-react";
 
@@ -336,22 +334,6 @@ export default function Caseta() {
               </div>
             </div>
 
-            {/* Footer Signatures */}
-            <div className="p-6 border-t border-gray-100 flex justify-between items-end mt-auto bg-gray-50/50">
-              <div className="flex gap-12">
-                <div className="text-center">
-                  <div className="w-48 border-b-2 border-gray-300 mb-2"></div>
-                  <span className="text-xs font-bold text-gray-400 uppercase">Firma del Conductor</span>
-                </div>
-                <div className="text-center">
-                  <div className="w-48 border-b-2 border-gray-300 mb-2"></div>
-                  <span className="text-xs font-bold text-gray-400 uppercase">Oficial de Caseta</span>
-                </div>
-              </div>
-              <button className="flex items-center gap-2 bg-white border border-gray-200 text-gray-600 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-                <Printer className="w-4 h-4" /> Imprimir Ticket
-              </button>
-            </div>
           </div>
 
           {/* Right: Active Passes & CCTV */}
@@ -405,24 +387,6 @@ export default function Caseta() {
                 >
                   <LogOut className="w-4 h-4" /> Nueva Salida
                 </div>
-              </div>
-            </div>
-
-            {/* CCTV Preview placeholder */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-3 border-b border-gray-100 bg-gray-50/50">
-                <h3 className="text-xs font-bold text-gray-700 uppercase">CCTV • Caseta Principal</h3>
-              </div>
-              <div className="h-44 bg-gray-900 relative flex items-center justify-center group overflow-hidden">
-                {/* Simulated CCTV effect */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                
-                <div className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1 animate-pulse shadow-lg">
-                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div> REC • CAM 04
-                </div>
-                <div className="absolute top-3 right-3 text-white/70 text-[10px] font-mono">CASETA A - SUR</div>
-                <Camera className="w-10 h-10 text-white/20 group-hover:scale-110 transition-transform duration-500" />
-                <div className="absolute bottom-3 left-3 text-white/70 text-[10px] font-mono">{currentTime.toISOString().split('T')[0]} {currentTime.toLocaleTimeString()}</div>
               </div>
             </div>
 
