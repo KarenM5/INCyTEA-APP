@@ -32,6 +32,7 @@ export default function Admin() {
       id: "2",
       name: "Lucía Fernández",
       role: "direccion",
+      direccion: "Secretaría Académica",
       phone: "+52 (555) 987-6543",
       email: "lucia.f@institucion.edu",
       password: "password12345",
@@ -61,6 +62,7 @@ export default function Admin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [direccion, setDireccion] = useState("");
   const [editingId, setEditingId] = useState(null);
 
   // Role details mapping for colors, labels and icons
@@ -106,6 +108,7 @@ export default function Admin() {
   const resetForm = () => {
     setName("");
     setRole("direccion");
+    setDireccion("");
     setPhone("");
     setEmail("");
     setPassword("");
@@ -116,6 +119,7 @@ export default function Admin() {
   const handleEdit = (member) => {
     setName(member.name);
     setRole(member.role);
+    setDireccion(member.direccion || "");
     setPhone(member.phone);
     setEmail(member.email);
     setPassword(member.password);
@@ -138,13 +142,17 @@ export default function Admin() {
       alert("Por favor complete todos los campos obligatorios.");
       return;
     }
+    if (role === "direccion" && !direccion) {
+      alert("Por favor especifique el nombre de la dirección.");
+      return;
+    }
 
     if (editingId) {
       // Update existing
       setPersonnelList((prev) =>
         prev.map((member) =>
           member.id === editingId
-            ? { ...member, name, role, phone, email, password }
+            ? { ...member, name, role, direccion: direccion || null, phone, email, password }
             : member
         )
       );
@@ -155,6 +163,7 @@ export default function Admin() {
         id: Date.now().toString(),
         name,
         role,
+        direccion: direccion || null,
         phone,
         email,
         password,
@@ -253,7 +262,7 @@ export default function Admin() {
                     </label>
                     <select
                       value={role}
-                      onChange={(e) => setRole(e.target.value)}
+                      onChange={(e) => { setRole(e.target.value); if (e.target.value !== "direccion") setDireccion(""); }}
                       className="w-full border border-gray-200 bg-gray-50/50 rounded-xl h-11 px-4 mt-1.5 focus:outline-none focus:border-[#032b63] focus:bg-white focus:ring-4 focus:ring-blue-100/50 transition-all text-sm text-gray-800 cursor-pointer"
                     >
                       <option value="direccion">Dirección/Secretaría</option>
@@ -262,6 +271,23 @@ export default function Admin() {
                       <option value="caseta">Caseta</option>
                     </select>
                   </div>
+
+                  {/* Direccion field — only shown when role is "direccion" */}
+                  {role === "direccion" && (
+                    <div>
+                      <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                        Dirección (Directorate)
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={direccion}
+                        onChange={(e) => setDireccion(e.target.value)}
+                        placeholder="Ej. Secretaría Académica, Dirección de Administración..."
+                        className="w-full border border-gray-200 bg-gray-50/50 rounded-xl h-11 px-4 mt-1.5 focus:outline-none focus:border-[#032b63] focus:bg-white focus:ring-4 focus:ring-blue-100/50 transition-all text-sm text-gray-800 placeholder-gray-400"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -426,6 +452,9 @@ export default function Admin() {
                                 </div>
                                 <div>
                                   <p className="font-semibold text-gray-800">{member.name}</p>
+                                  {member.direccion && (
+                                    <p className="text-xs text-gray-400">{member.direccion}</p>
+                                  )}
                                   <p className="text-xs text-gray-400">ID: {member.id}</p>
                                 </div>
                               </div>
