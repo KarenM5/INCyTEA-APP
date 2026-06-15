@@ -41,8 +41,41 @@ export default function Login() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#eef2f6] flex items-center justify-center p-4 sm:p-6 md:p-8">
-      <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl border border-gray-100/80 p-6 sm:p-8 flex flex-col gap-6">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-hidden">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes drift {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(15px, -10px) rotate(2deg); }
+          66% { transform: translate(-10px, -20px) rotate(-1deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        .animate-shimmer {
+          background-size: 200% 200%;
+          animation: shimmer 8s ease infinite;
+        }
+        .animate-drift {
+          animation: drift 12s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Animated background */}
+      <div className="absolute inset-0 animate-shimmer" style={{ background: "linear-gradient(135deg, rgba(3,43,99,0.02) 0%, rgba(255,255,255,0) 30%, rgba(3,43,99,0.03) 60%, rgba(255,255,255,0) 100%)" }} />
+      <div className="absolute w-28 h-28 rounded-full bg-emerald-400/10 animate-drift" style={{ top: "5%", left: "5%", animationDelay: "0s", animationDuration: "15s" }} />
+      <div className="absolute w-16 h-16 rounded-full bg-sky-400/15 animate-drift" style={{ top: "10%", right: "15%", animationDelay: "-3s", animationDuration: "13s" }} />
+      <div className="absolute w-12 h-12 rounded-full bg-pink-400/15 animate-drift" style={{ top: "30%", left: "20%", animationDelay: "-6s", animationDuration: "11s" }} />
+      <div className="absolute w-36 h-36 rounded-full bg-amber-400/8 animate-drift" style={{ top: "40%", right: "8%", animationDelay: "-1s", animationDuration: "18s" }} />
+      <div className="absolute w-20 h-20 rounded-full bg-emerald-400/12 animate-drift" style={{ top: "55%", left: "8%", animationDelay: "-5s", animationDuration: "14s" }} />
+      <div className="absolute w-10 h-10 rounded-full bg-pink-400/12 animate-drift" style={{ top: "65%", right: "20%", animationDelay: "-2s", animationDuration: "10s" }} />
+      <div className="absolute w-24 h-24 rounded-full bg-sky-400/10 animate-drift" style={{ top: "75%", left: "25%", animationDelay: "-7s", animationDuration: "16s" }} />
+      <div className="absolute w-14 h-14 rounded-full bg-amber-400/12 animate-drift" style={{ top: "85%", right: "10%", animationDelay: "-4s", animationDuration: "12s" }} />
+      <div className="absolute w-8 h-8 rounded-full bg-sky-400/20 animate-drift" style={{ top: "50%", left: "40%", animationDelay: "-1.5s", animationDuration: "9s" }} />
+
+      <div className="relative z-10 w-full max-w-lg bg-white rounded-3xl shadow-xl border border-gray-100/80 p-6 sm:p-8 flex flex-col gap-6">
         {/* HEADER */}
         <div className="flex flex-col items-center text-center">
           <div className="bg-[#032b63] p-4 rounded-2xl shadow-md text-white inline-flex items-center justify-center">
